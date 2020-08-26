@@ -1,8 +1,9 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, Fragment} from 'react';
 import Layout from '../core/Layout';
 import {isAuthenticated} from '../auth';
 import {Link} from 'react-router-dom';
 import {getCategories, deleteCategory} from './apiAdmin';
+import {Table} from 'react-bootstrap'
 
 const ManageCategories = () => {
 	const [categories, setCategories] = useState([])
@@ -39,33 +40,79 @@ const ManageCategories = () => {
 			description='Create Read Update & Delete Categories'
 			className='container-fluid'
 		>
-			<div className="row">
-				<div className='col-5 text-center'>
-					<h2 className="text-center">
-						Total Categories: {categories.length}
-					</h2>
-					<ul className="list-group">
-						{categories.map((category) => (
-							<li 
-								key={category._id} 
-								className="list-group-item d-flex  align-items-center"
-							>
-								<strong>{category.name}</strong>
-								<Link to={`/admin/category/update/${category._id}`}>
+			<h2 className="text-center">
+				Total Categories: {categories.length}
+			</h2>
+			<Table striped bordered hover size="sm">
+			 <thead>
+			    <tr>
+			      <th>Category Name</th>
+			      <th>Update</th>
+			      <th>Delete</th>
+			    </tr>
+			  </thead>
+				{categories.map((category) => (
+				  <tbody key={category._id}>
+				    <tr>
+				      <td>{category.name}</td>
+				      <td>
+				      	<Link to={`/admin/category/update/${category._id}`}>
 									<span className="badge badge-warning badge-pill">
 										Update
 									</span>
 								</Link>
-								<span onClick={() => destroyCategory(category._id)} className="badge badge-danger badge-pill">
+				      </td>
+				      <td>
+				      	<span onClick={() => destroyCategory(category._id)} className="badge badge-danger badge-pill">
 									Delete
 								</span>
-							</li>
-						))}
-					</ul>
-				</div>
-			</div>
+				      </td>
+				    </tr>
+				  </tbody>
+				))}
+			</Table>
 		</Layout>
 	);
 }
 
 export default ManageCategories;
+
+
+
+
+// {
+// 	<div className="row">
+// 		<div className='col-5 text-center'>
+// 			<h2 className="text-center">
+// 				Total Categories: {categories.length}
+// 			</h2>
+// 			<ul className="list-group">
+// 				{categories.map((category) => (
+// 					<li 
+// 						key={category._id} 
+// 						className="list-group-item d-flex  align-items-center"
+// 					>
+// 						<strong>{category.name}</strong>
+// 						<Link to={`/admin/category/update/${category._id}`}>
+// 							<span className="badge badge-warning badge-pill">
+// 								Update
+// 							</span>
+// 						</Link>
+// 						<span onClick={() => destroyCategory(category._id)} className="badge badge-danger badge-pill">
+// 							Delete
+// 						</span>
+// 					</li>
+// 				))}
+// 			</ul>
+// 		</div>
+// 	</div>
+// }
+
+
+
+
+
+
+
+
+
