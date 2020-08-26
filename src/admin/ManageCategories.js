@@ -63,7 +63,11 @@ const ManageCategories = () => {
 								</Link>
 				      </td>
 				      <td>
-				      	<span onClick={() => destroyCategory(category._id)} className="badge badge-danger badge-pill">
+								<span onClick={() => 
+									window.confirm(`Are you sure you wish to delete ${category.name}?`) &&
+        					destroyCategory(category._id)
+        					} 
+        					className="badge badge-danger badge-pill">
 									Delete
 								</span>
 				      </td>
