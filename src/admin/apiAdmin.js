@@ -10,12 +10,8 @@ export const createCategory = (userId, token, category) => {
     },
     body: JSON.stringify(category)
   })
-    .then(response => {
-      return response.json();
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    .then(response => response.json())
+    .catch(err => console.log(err))
 };
 
 export const createProduct = (userId, token, product) => {
@@ -27,24 +23,16 @@ export const createProduct = (userId, token, product) => {
     },
     body: product
   })
-    .then(response => {
-      return response.json();
-    })
-    .catch(err => {
-      console.log(err);
-    });
+    .then(response => response.json())
+    .catch(err => console.log(err))
 };
 
 export const getCategories = () => {
   return fetch(`${API}/categories`, {
     method: 'GET'
   })
-  .then(response => {
-    return response.json()
-  })
-  .catch(err => {
-    console.log(err)
-  })
+    .then(response => response.json())
+    .catch(err => console.log(err))
 }
 
 export const listOrders = (userId, token) => {
@@ -84,24 +72,6 @@ export const updateOrderStatus = (userId, token, orderId, status) => {
   .then(response => response.json())
   .catch(err => console.log(err))
 }
-
-// to perform crud on product
-// get all products
-// get a single product
-// update single product
-// delete single product
-
-
-// // reads product
-// router.get('/product/:productId', read);
-// // creates product
-// router.post('/product/create/:userId', requireSignin, isAuth, isAdmin, create);
-// // deletes product
-// router.delete('/product/:productId/:userId', requireSignin, isAdmin, isAuth, remove);
-// // updates product
-// router.put('/product/:productId/:userId', requireSignin, isAdmin, isAuth, update);
-// // lists all the products
-// router.get('/products', list);
 
 export const getAllProducts = () => {
   return fetch(`${API}/products/?limit=undefined`, {
@@ -143,10 +113,52 @@ export const updateProduct = (productId, userId, token, product) => {
   })
     .then(response => response.json())
     .catch(err => console.log(err))
-  }
+}
 
+export const getCategory = (categoryId) => {
+  return fetch(`${API}/category/${categoryId}`, {
+    method: 'GET'
+  })
+    .then(response => response.json())
+    .catch(err => console.log(err))
+}
 
+export const deleteCategory = (categoryId, userId, token) => {
+  return fetch(`${API}/category/${categoryId}/${userId}`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    }
+  })
+    .then(response => response.json())
+    .catch(err => console.log(err))
+}
 
+export const updateCategory = (categoryId, userId, token, category) => {
+  return fetch(`${API}/category/${categoryId}/${userId}`, {
+    method: 'PUT',
+    headers: { 
+      Accept: 'application/json',
+      // 'Content-Type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify(category)
+  })
+    .then(response => response.json())
+    .catch(err => console.log(err))
+  } 
+
+// router.get('/category/:categoryId', read);
+
+// router.post('/category/create/:userId', requireSignin, isAuth, isAdmin, create);
+
+// router.delete('/category/:categoryId/:userId', requireSignin, isAuth, isAdmin, remove);
+
+// router.put('/category/:categoryId/:userId', requireSignin, isAdmin, isAuth, update);
+
+// router.get('/categories', list);
 
 
 

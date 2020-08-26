@@ -9,9 +9,7 @@ export const read = (userId, token) => {
       Authorization: `Bearer ${token}`
     }
   })
-    .then(response => {
-	    return response.json()
-		})
+    .then(response => response.json())
     .catch(err => console.log(err))
 }
 
@@ -25,9 +23,7 @@ export const update = (userId, token, user) => {
     },
     body: JSON.stringify(user)
   })
-    .then(response => {
-	    return response.json()
-		})
+    .then(response => response.json())
     .catch(err => console.log(err))
 }
 
@@ -51,8 +47,6 @@ export const getPurchaseHistory = (userId, token) => {
       Authorization: `Bearer ${token}`
     }
   })
-    .then(response => {
-	    return response.json()
-		})
+    .then(response => response.json())
     .catch(err => console.log(err))
 }

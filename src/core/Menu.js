@@ -4,11 +4,12 @@ import {signout, isAuthenticated} from '../auth'
 import {itemTotal} from './cartHelpers'
 
 const isActive = (history, path) => {
-	if(history.location.pathname === path) {
-		return {color: '#ff9900'}
-	} else {
-		return {color: '#ffffff'}
-	}
+	// if(history.location.pathname === path) {
+	// 	return {color: '#ff9900'}
+	// } else {
+	// 	return {color: '#ffffff'}
+	// }
+	return history.location.pathname === path ? {color: '#ff9900'} : {color: '#ffffff'}
 };
 
 const Menu = ({history}) => (
@@ -112,104 +113,153 @@ const Menu = ({history}) => (
 		</ul>
 	</div>
 );
-
 export default withRouter(Menu);
 
 
-// import React, {Fragment, useState} from 'react'
-// import {withRouter} from 'react-router-dom'
-// // import { BrowserRouter as Router } from 'react-router-dom';
-// // import {Link, withRouter} from 'react-router-dom'
-// import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavItem, MDBNavLink, MDBNavbarToggler, MDBCollapse, MDBDropdown,
-// MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon } from "mdbreact";
+// import React, {Fragment, Component, useState, useEffect} from 'react'
+// import {Link, withRouter} from 'react-router-dom'
 // import {signout, isAuthenticated} from '../auth'
+// import {itemTotal} from './cartHelpers'
+
 
 // const isActive = (history, path) => {
-// 	if(history.location.pathname === path) {
-// 		return {color: '#ff9900'}
-// 	} else {
-// 		return {color: '#000000'}
-// 	}
-// };
+// 		const pathname = history.location.pathname
+// 		return pathname === path ? {color: '#000000'} : {color: '#ffffff'}
+// 	};
+
 
 // const Menu = ({history}) => {
+//   const [isNavCollapsed, setIsNavCollapsed] = useState(true);
+//   const handleNavCollapse = () => setIsNavCollapsed(!isNavCollapsed);
+
+// 	// const [collapsed, setCollapsed] = useState(true);
+// 	// const toggleCollapse = () => setCollapsed(!collapsed);
 
 
+// 	return (
+// 		<div>
+// 			<nav className="navbar navbar-expand-md bg-custom flex-column align-items-stretch fixed-top nav-tabs">
+// 				<div className="d-flex">
+// 					<Link className="navbar-brand mx-auto" to="/">
+// 						ECOMMERCE
+// 					</Link>
 
-//   const [collapsed, setCollapsed] = useState(true);
+// 					<button 
+// 						class="navbar-toggler ml-auto custom-toggler" 
+// 						type="button" 
+// 						data-toggle="collapse" 
+// 						data-target="#navbarNavAltMarkup" 
+// 						aria-controls="navbarNavAltMarkup" 
+// 						aria-expanded={!isNavCollapsed ? true : false} 
+// 						aria-label="Toggle navigation"
+// 						onClick={handleNavCollapse}
+// 					>
+// 						<span className="navbar-toggler-icon"></span>
+// 					</button>
+// 				</div>
 
-//   const toggleCollapse = () => setCollapsed(!collapsed);
+// 				<div className={`${isNavCollapsed ? 'collapse' : ''} navbar-collapse collapse w-100`} id="navbarNavAltMarkup">
+// 					<ul className="navbar-nav mx-auto">
+// 						<li className='nav-item'>
+// 							<Link 
+// 								className='nav-link' 
+// 								style={isActive(history, '/')} 
+// 								to='/'
+// 							>
+// 								Home
+// 							</Link>
+// 						</li>
 
-// 	  return (
-// 		  <MDBNavbar color="indigo" dark expand="md" style={{backgroundColor: '#000000'}}>
-// 		    <MDBNavbarToggler onClick={toggleCollapse} />
-// 		    <MDBCollapse id="navbarCollapse3" isOpen={!collapsed} navbar>
-// 		      <MDBNavbarNav left>
-
-// 		        <MDBNavItem active>
-// 		          <MDBNavLink to='/' style={isActive(history, '/')} >
-// 		            Home
-// 		          </MDBNavLink>
-// 		        </MDBNavItem>
+// 						<li className='nav-item'>
+// 							<Link 
+// 								className='nav-link' 
+// 								style={isActive(history, '/shop')} 
+// 								to='/shop'
+// 							>
+// 								Shop
+// 							</Link>
+// 						</li>
 
 // 						{isAuthenticated() && isAuthenticated().user.role === 0 && (
-// 							<MDBNavItem>
-// 		            <MDBNavLink to='/user/dashboard' style={isActive(history, '/user/dashboard')} >Dashboard</MDBNavLink>
-// 		          </MDBNavItem>
+// 							<li className='nav-item'>
+// 								<Link 
+// 									className='nav-link' 
+// 									style={isActive(history, '/user/dashboard')} 
+// 									to='/user/dashboard'
+// 								>
+// 									Dashboard
+// 								</Link>
+// 							</li>
 // 						)}
 
 // 						{isAuthenticated() && isAuthenticated().user.role === 1 && (
-// 							<MDBNavItem>
-// 		            <MDBNavLink to='/admin/dashboard' style={isActive(history, '/admin/dashboard')}  >Dashboard</MDBNavLink>
-// 		          </MDBNavItem>
+// 							<li className='nav-item'>
+// 								<Link 
+// 									className='nav-link' 
+// 									style={isActive(history, '/admin/dashboard')} 
+// 									to='/admin/dashboard'
+// 								>
+// 									Dashboard
+// 								</Link>
+// 							</li>
 // 						)}
 
 // 						{!isAuthenticated() && (
 // 							<Fragment>
-// 								<MDBNavItem>
-// 		              <MDBNavLink to='/signin' style={isActive(history, '/signin')}   >Sign in</MDBNavLink>
-// 		            </MDBNavItem>
-										
-// 								<MDBNavItem>
-// 		              <MDBNavLink to='/signup' style={isActive(history, '/signup')}   >Sign in</MDBNavLink>
-// 		            </MDBNavItem>
+// 								<li className='nav-item'>
+// 									<Link 
+// 										className='nav-link' 
+// 										style={isActive(history, '/signin')} 
+// 										to='/signin'
+// 									>
+// 										Sign in
+// 									</Link>
+// 								</li>
+
+// 								<li className='nav-item'>
+// 									<Link 
+// 										className='nav-link' 
+// 										style={isActive(history, '/signup')} 
+// 										to='/signup'
+// 									>
+// 										Sign up
+// 									</Link>
+// 								</li>
 // 							</Fragment>
 // 						)}
 
 // 						{isAuthenticated() && (
-// 							<MDBNavItem>
-// 		            <MDBNavLink 
-// 		              style={{cursor: 'pointer', color: '#000000'}}
+// 							<li className='nav-item'>
+// 								<span 
+// 									className='nav-link' 
+// 									style={{cursor: 'pointer', color: '#ffffff'}}
 // 									onClick={() => 
 // 									 	signout(() => {
 // 											history.push('/');
 // 										})
 // 									}
 // 								>
-// 		              Sign Out
-// 		            </MDBNavLink>
-// 		          </MDBNavItem>
+// 									Sign Out
+// 								</span>
+// 							</li>
 // 						)}
-// 		      </MDBNavbarNav>
 
-// 		      <MDBNavbarNav right>
-// 		        <MDBNavItem>
-// 		          <MDBDropdown>
-// 		            <MDBDropdownToggle nav caret>
-// 		              <MDBIcon icon="user" />
-// 		            </MDBDropdownToggle>
-// 		            <MDBDropdownMenu className="dropdown-default">
-// 		              <MDBDropdownItem href="#!">Action</MDBDropdownItem>
-// 		              <MDBDropdownItem href="#!">Another Action</MDBDropdownItem>
-// 		              <MDBDropdownItem href="#!">Something else here</MDBDropdownItem>
-// 		              <MDBDropdownItem href="#!">Something else here</MDBDropdownItem>
-// 		            </MDBDropdownMenu>
-// 		          </MDBDropdown>
-// 		        </MDBNavItem>
-// 		      </MDBNavbarNav>
-// 		    </MDBCollapse>
-// 		  </MDBNavbar>
-// 	  )
+// 						<li className='nav-item ml-auto'>
+// 							<Link 
+// 								className='nav-link' 
+// 								style={isActive(history, '/cart')} 
+// 								to='/cart'
+// 							>
+// 								<i className="fas fa-shopping-cart">
+// 									<sup><span className="badge ml-1">{itemTotal()}</span></sup>
+// 								</i>
+// 							</Link>
+// 						</li>
+// 					</ul>
+// 				</div>
+// 			</nav>
+// 		</div>
+// 	)
 // }
 
 // export default withRouter(Menu);

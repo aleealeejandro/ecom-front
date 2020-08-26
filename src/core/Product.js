@@ -3,7 +3,7 @@ import Layout from './Layout';
 import {read, listRelated} from './apiCore'
 import Card from './Card'
 
-const Product = (props) => {
+const Product = props => {
 	const [product, setProduct] = useState({})
 	const [relatedProduct, setRelatedProduct] = useState([])
 	const [error, setError] = useState(false)
@@ -27,18 +27,24 @@ const Product = (props) => {
 	}
 
 	useEffect(() => {
-		const productId = props.match.params.productId
-		loadSingleProduct(productId)
-		
+		const productId = props.match.params.productId;
+		loadSingleProduct(productId);
 	}, [props])
 
 	return (
 		<Layout 
 			title={product && product.name} 
-			description={product && product.description && product.description.substring(0, 100)}>
+			description={
+				product && 
+				product.description && 
+				product.description.substring(0, 100)
+			}
+		>
 			<div className="row mb-4 container-fluid mx-auto">
 				<div className="col-12 ">
-					{product && product.description && <Card product={product} showViewProductButton={false} />}
+					{product && product.description && (
+						<Card product={product} showViewProductButton={false} />
+					)}
 				</div>
 
 				<div className="col-12">

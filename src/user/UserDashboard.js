@@ -20,13 +20,13 @@ const Dashboard = () => {
 				console.log(data.error)
 			} else {
 				setHistory(data)
-			}
+			} 
 		})
 	}
 
 	useEffect(() => {
 		init(_id, token)
-	})
+	}, [])
 
 	const userLinks = () => {
 		return (

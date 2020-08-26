@@ -5,9 +5,7 @@ export const getProducts = (sortBy) => {
   return fetch(`${API}/products?sortBy=${sortBy}&order=desc&limit=6`, {
     method: 'GET'
   })
-    .then(response => {
-      return response.json()
-    })
+    .then(response => response.json())
     .catch(err => console.log(err))
 }
 
@@ -15,10 +13,8 @@ export const getCategories = () => {
 	return fetch(`${API}/categories`, {
     method: 'GET'
 	})
-  	.then(response => {
-      return response.json()
-  	})
-  	.catch(err => console.log(err))
+  	.then(response => response.json())
+    .catch(err => console.log(err))
 }
 
 export const getFilteredProducts = (skip, limit, filters = {}) => {
@@ -36,9 +32,7 @@ export const getFilteredProducts = (skip, limit, filters = {}) => {
     },
     body: JSON.stringify(data)
   })
-    .then(response => {
-        return response.json();
-    })
+    .then(response => response.json())
     .catch(err => console.log(err))
 };
 
@@ -47,9 +41,7 @@ export const list = params => {
   return fetch(`${API}/products/search?${query}`, {
     method: 'GET'
   })
-    .then(response => {
-      return response.json()
-    })
+    .then(response => response.json())
     .catch(err => console.log(err))
 }
 
@@ -57,9 +49,7 @@ export const read = (productId) => {
   return fetch(`${API}/product/${productId}`, {
     method: 'GET'
   })
-    .then(response => {
-      return response.json()
-    })
+    .then(response => response.json())
     .catch(err => console.log(err))
 }
 
@@ -67,9 +57,7 @@ export const listRelated = (productId) => {
   return fetch(`${API}/products/related/${productId}`, {
     method: 'GET'
   })
-    .then(response => {
-      return response.json()
-    })
+    .then(response => response.json())
     .catch(err => console.log(err))
   }
 
@@ -82,9 +70,7 @@ export const getBraintreeClientToken = (userId, token) => {
       Authorization: `Bearer ${token}`
     },
   })
-    .then(response => {
-      return response.json()
-    })
+    .then(response => response.json())
     .catch(err => console.log(err))
 }
 
@@ -98,11 +84,8 @@ export const processPayment = (userId, token, paymentData) => {
     },
     body: JSON.stringify(paymentData)
   })
-    .then(response => {
-      // console.log(response)
-      return response.json()
-    })
-    .catch(err => console.log('err from apicore', err))
+    .then(response => response.json())
+    .catch(err => console.log(err))
 }
 
 export const createOrder = (userId, token, createOrderData) => {
@@ -115,31 +98,6 @@ export const createOrder = (userId, token, createOrderData) => {
     },
     body: JSON.stringify({order: createOrderData})
   })
-    .then(response => {
-      // console.log(response)
-      return response.json()
-    })
-    .catch(err => console.log('err from apicore create order', err))
+    .then(response => response.json())
+    .catch(err => console.log(err))
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
