@@ -9,7 +9,6 @@ const UpdateCategory = ({match}) => {
 		name: '',
 		loading: false,
 		error: '',
-		updatedCategory: '',
 		redirectToProfile: false,
 		formData: ''
 	})
@@ -17,19 +16,10 @@ const UpdateCategory = ({match}) => {
 
 	// destructure user and token from local storage
 	const {user, token} = isAuthenticated()
-
-	// deconstruct values from state
-	const {
-		name,
-		loading, 
-		error, 
-		updatedCategory, 
-		redirectToProfile, 
-		formData
-	} = values;
+	const {name, error, redirectToProfile} = values;
 
 	const init = categoryId => {
-		getCategory(categoryId).then(data => {
+		getCategory(categoryId, token).then(data => {
 			if(data.error) {
 				setValues({...values, error: data.error})
 			} else {
@@ -37,12 +27,11 @@ const UpdateCategory = ({match}) => {
 				setValues({
 					...values,
 					name: data.name,
-					formData: new FormData()
 				})
 			}
 		})
 	}
-
+ 
 	// runs when the compound mounts and theres a change in the state
 	useEffect(() => {
 		init(match.params.categoryId);
@@ -50,28 +39,26 @@ const UpdateCategory = ({match}) => {
 
 	const handleChange = name => event => {
 		const value = event.target.value
-		formData.set(name, value)
-		setValues({...values, [name]: value})
+		setValues({...values, error: false, [name]: value})
 	};
 
 	const clickSubmit = event => {
 		event.preventDefault();
-		setValues({...values, error: '', loading: true});
+		const category = {name: name};
 
-		updateCategory(match.params.categoryId, user._id, token, formData).then(data => {
-			if(data.error) {
-				setValues({...values, error: data.error})
-			} else {
-				setValues({
-					...values, 
-					name: '', 
-					loading: false,
-					updatedCategory: data.name,
-					redirectToProfile: true,
-					error: false
-				});
-			}
-		});
+		updateCategory(match.params.categoryId, user._id, token, category)
+			.then(data => {
+				if(data.error) {
+					setValues({...values, error: data.error})
+				} else {
+					setValues({
+						...values, 
+						name: '',
+						error: false,
+						redirectToProfile: true
+					});
+				}
+			});
 	};
 
 	const updateCategoryForm = () => (
@@ -79,10 +66,12 @@ const UpdateCategory = ({match}) => {
 			<div className=' col-md-10 offset-md-1 col-sm-8 offset-sm-2'>
 				<label className='text-muted'>Category name</label>
 				<input
-					type='text'
-					className='form-control' 
-					onChange={handleChange('name')} 
-					value={name}
+					onChange={handleChange('name')}
+          value={name}
+          // className="input100"
+          type="text"
+          required
+          name="name"
 				/>
 			</div>
 			<button className='btn btn-outline-primary'>Update Category</button>
@@ -94,20 +83,6 @@ const UpdateCategory = ({match}) => {
 			{error}
 		</div>
 	);
-	
-	const showSuccess = () => (
-		<div className='alert alert-success' style={{display: updatedCategory ? '' : 'none'}}>
-			{`${updatedCategory} was updated successfully`}
-		</div>
-	);
-
-	const showLoading = () => 
-		loading && (
-			<div className="alert alert-info">
-				<h2>Loading...</h2>
-			</div>
-		);
-	
 
 	const redirectUser = () => {
 		if(redirectToProfile) {
@@ -127,9 +102,7 @@ const UpdateCategory = ({match}) => {
 		<Layout title='Update Category' description={`Howdy ${user.name},\u00A0 ready to update a category?`} className='container'>
 			<div className='row'>
 				<div className='col-md-8 offset-md-2'>
-					{showSuccess()}
 					{showError()}
-					{showLoading()}
 					{updateCategoryForm()}
 					{redirectUser()}
 					{goBack()}
