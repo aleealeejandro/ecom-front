@@ -3,6 +3,7 @@ import Layout from '../core/Layout';
 import {isAuthenticated} from '../auth';
 import {Link} from 'react-router-dom';
 import {getAllProducts, deleteProduct} from './apiAdmin';
+import {Table} from 'react-bootstrap'
 
 const ManageProducts = () => {
 	const [products, setProducts] = useState([])
@@ -39,31 +40,37 @@ const ManageProducts = () => {
 			description='Create Read Update & Delete Products'
 			className='container-fluid'
 		>
-			<div className="row">
-				<div className='col-5 text-center'>
-					<h2 className="text-center">
-						Total products: {products.length}
-					</h2>
-					<ul className="list-group">
-						{products.map((product) => (
-							<li 
-								key={product._id} 
-								className="list-group-item d-flex  align-items-center"
-							>
-								<strong>{product.name}</strong>
-								<Link to={`/admin/product/update/${product._id}`}>
+			<h2 className="text-center">
+				Total Products: {products.length}
+			</h2>
+			<Table striped bordered hover size="sm">
+			 <thead>
+			    <tr>
+			      <th>Product Name</th>
+			      <th>Update</th>
+			      <th>Delete</th>
+			    </tr>
+			  </thead>
+				{products.map((product) => (
+				  <tbody key={product._id}>
+				    <tr>
+				      <td>{product.name}</td>
+				      <td>
+				      	<Link to={`/admin/product/update/${product._id}`}>
 									<span className="badge badge-warning badge-pill">
 										Update
 									</span>
 								</Link>
-								<span onClick={() => destroyProduct(product._id)} className="badge badge-danger badge-pill">
+				      </td>
+				      <td>
+				      	<span onClick={() => destroyProduct(product._id)} className="badge badge-danger badge-pill">
 									Delete
 								</span>
-							</li>
-						))}
-					</ul>
-				</div>
-			</div>
+				      </td>
+				    </tr>
+				  </tbody>
+				))}
+			</Table>
 		</Layout>
 	);
 }
