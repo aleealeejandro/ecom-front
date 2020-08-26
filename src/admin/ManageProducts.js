@@ -30,6 +30,17 @@ const ManageProducts = () => {
 		})
 	}
 
+	// const destroyProductConfirmation = (productId) => (
+	//  <button
+ //      onClick={e =>
+ //        window.confirm(`Are you sure you wish to delete this product?`) &&
+ //        destroyProduct(productId)
+ //      }
+ //    >
+ //      Delete Product
+ //    </button>
+	// )
+
 	useEffect(() => {
 		loadProducts()
 	}, [])
@@ -63,7 +74,11 @@ const ManageProducts = () => {
 								</Link>
 				      </td>
 				      <td>
-				      	<span onClick={() => destroyProduct(product._id)} className="badge badge-danger badge-pill">
+								<span onClick={() => 
+									window.confirm(`Are you sure you wish to delete ${product.name}?`) &&
+        					destroyProduct(product._id)
+        					} 
+        					className="badge badge-danger badge-pill">
 									Delete
 								</span>
 				      </td>
